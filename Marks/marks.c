@@ -8,11 +8,14 @@ Make recommendations
 #include <stdio.h>
 #include <string.h>
 int main(int argc, char const *argv[]) {
+  FILE *path;
   int ArraySize = 8,i=0;
-  int MarksArray[ArraySize],Mark,Error=0,FailCount=0,apples;
+  int MarksArray[ArraySize],Mark,Error=0,FailCount=0,order;
   float Average,sum=0;
   char Grade;
   char UnitArray[8][50]={"Introduction to programming","Maths for science","Discrete Structures","Software applications","Physics","Computer networks","Communicaton SKills","Development Studies"};
+  path = fopen("/home/dickson/Documents/LOGS/marks.txt","a");
+
   //Data collection
   while (i<ArraySize)
   {
@@ -79,12 +82,13 @@ int main(int argc, char const *argv[]) {
     else if (FailCount>5) {
       printf("\nStatus : Discontinued\n");
     }
+    //arrange marks in descending order
     for (i=0; i<ArraySize; i++) {
       for (int j=0; j<ArraySize; j++) {
         if (MarksArray[j]<MarksArray[i]) {
-          apples=MarksArray[i];
+          order=MarksArray[i];
           MarksArray[i]=MarksArray[j];
-          MarksArray[j]=apples;
+          MarksArray[j]=order;
         }
       }
     }
@@ -94,10 +98,21 @@ int main(int argc, char const *argv[]) {
     printf("Sum = %.2f\n",sum );
     printf("Average = %.2f\n",Average);
     printf("Grade = %c\n", Grade);
-    printf("Marks in descending order :");
-    for (i=0; i<ArraySize; i++) {
-    printf("\t %d ",MarksArray[i]);
+
+    //writing to logs
+    for (i=0;i<ArraySize;i++) {
+      fprintf(path,"\t %d ",MarksArray[i]);
     }
+    fprintf(path, "\n\t Grade %c\n",Grade);
+    fprintf(path,"\tFailed  %d Units\n",FailCount );
+    fprintf(path, "\t***********\n");
+    fclose(path);
+     // printf("Marks in descending order :");
+    //
+    // //display marks in descending order
+    // for (i=0; i<ArraySize; i++) {
+    // printf("\t %d ",MarksArray[i]);
+    // }
   }
   else{
     printf("Error check your inputs\n");
