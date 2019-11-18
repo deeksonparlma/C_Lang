@@ -1,0 +1,6 @@
+Course * Name * Age
+*******************
+CS Dickson 19 
+___________________ 
+Journalism Mark 21 
+___________________ 
